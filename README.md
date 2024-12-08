@@ -15,9 +15,9 @@
 - As a user, I want the system to recommend medicines based on my input, so I can make informed decisions about what to buy.
 
 ### Admin Stories
--As an admin, I want to manage and monitor the stock levels in vending machines, so I can restock them promptly to avoid shortages.
--As an admin, I want to review and analyze sales data, so I can identify trends and improve vending machine performance.
--As an admin, I want the vending machine inventory to be updated in real time and reflected accurately to users, ensuring credibility and trust in the system.
+- As an admin, I want to manage and monitor the stock levels in vending machines, so I can restock them promptly to avoid shortages.
+- As an admin, I want to review and analyze sales data, so I can identify trends and improve vending machine performance.
+- As an admin, I want the vending machine inventory to be updated in real time and reflected accurately to users, ensuring credibility and trust in the system.
 <br><br>
 <!-- Tech stack -->
 <img src="./readme/title3.svg"/>
