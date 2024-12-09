@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class LocationController extends Controller{
 
     public function setUserLocation(Request $request){
 
         $user = JWTAuth::parseToken()->authenticate();
-        if($user->isEmpty()){
+        if(!$user){
             return response()->json([
                 "error" => "No user"
             ],400);
