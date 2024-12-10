@@ -16,11 +16,13 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('set_location', [LocationController::class, 'setUserLocation']);
 
     Route::prefix('machine')->group(function () {
-        //Route::get('/', [LocationController::class, 'getClosestLocation']); 
         Route::get('/{id}', [ProductsController::class, 'getProductList']);
         Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
-        
     });
-    Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
 
+    Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
+    Route::prefix("admin")->middleware(AdminMiddleware::class)->group(function (){
+        Route::post("/add_machine",[AdminController::class,"addMachine"]);
+
+    });
 });
