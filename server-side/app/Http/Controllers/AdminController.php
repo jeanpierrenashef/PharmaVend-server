@@ -41,20 +41,35 @@ class AdminController extends Controller{
     }
     public function updateInventory(Request $request){
 
-        Inventory::updateOrInsert([
+    $inventory = Inventory::where('machine_id', $request->machine_id)
+                            ->where('product_id', $request->product_id)
+                            ->first();
 
+    if ($inventory) {
+        
+        Inventory::where('machine_id', $request->machine_id)
+                    ->where('product_id', $request->product_id)
+                    ->update([
+                        'quantity' => $inventory->quantity + $request->add_quantity,
+                ]);
+    } else {
+
+        Inventory::create([
             'machine_id' => $request->machine_id,
             'product_id' => $request->product_id,
-        ],
-        [
-            'quantity' => $request->quantity,
-        ]
-    );
-
-        return response()->json([
-            "message" => "inventory updated successfully",
-            //"inventory" => $inventory,
-        ], 200);
-
+            'quantity' => $request->add_quantity,
+        ]);
     }
+
+    
+    $updatedInventory = Inventory::where('machine_id', $request->machine_id)
+                                ->where('product_id', $request->product_id)
+                                ->first();
+
+    return response()->json([
+        "message" => "Inventory updated successfully.",
+        "inventory" => $updatedInventory,
+    ], 200);
+}
+
 }
