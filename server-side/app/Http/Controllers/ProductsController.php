@@ -22,4 +22,27 @@ class ProductsController extends Controller{
             'inventory' => $inventoryRecords
         ], 200);
     }
+    public function purchaseProduct(Request $request){
+        $inventory = Inventory::where("machine_id", $request->machine_id)
+                                ->where("product_id", $request->product_id)
+                                ->first();
+        if(!$inventory){
+            return response()->json([
+                "message" => "This product doesnt exist in this table"
+            ],404);
+        }
+        if($inventory->quantity < $request->quantity){
+            return response()->json([
+                "message" => "Insufficient stock"
+            ],500);
+        }
+
+        $inventory->quantity -= $request->quantity;
+        $inventory->save();
+
+        return response()->json([
+            "message" => "Purchase successful",
+            "remaining_quantity" => $inventory->quantity
+        ],200);
+    }
 }
