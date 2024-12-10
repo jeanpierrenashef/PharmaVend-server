@@ -10,7 +10,7 @@ use App\Models\Transaction;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
-class ProductsController extends Controller{
+class ProductsController extends Controller{ 
 
     public function getProductList($id){
         $inventoryRecords = Inventory::where("machine_id", $id)->get();
