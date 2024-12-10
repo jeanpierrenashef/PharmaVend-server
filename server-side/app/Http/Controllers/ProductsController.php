@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Machine;
+use App\Models\Transaction;
 
+use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller{
@@ -44,6 +46,18 @@ class ProductsController extends Controller{
                             'quantity' => $inventory->quantity - $request->quantity
                         ]);
 
+        $user = JWTAuth::parseToken()->authenticate();
+        $product = Product::find($request->product_id);
+        $price = $product->price;
+
+        $transaction = new Transaction;
+        $transaction->quantity = $request->quantity;
+        $transaction->total_price = ($request->quantity * $price);
+        $transaction->user_id = $user->id;
+        $transaction->machine_id = $request->machine_id;
+        $transaction->product_id = $request->product_id;
+        $transaction->save();
+        
         return response()->json([
             "message" => "Purchase successful",
             "remaining_quantity" => ($inventory->quantity - $request->quantity)
