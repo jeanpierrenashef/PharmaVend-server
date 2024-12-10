@@ -41,7 +41,7 @@ class AdminController extends Controller{
     }
     public function updateInventory(Request $request){
 
-        $inventory = Inventory::updateOrCreate([
+        Inventory::updateOrInsert([
 
             'machine_id' => $request->machine_id,
             'product_id' => $request->product_id,
@@ -51,10 +51,9 @@ class AdminController extends Controller{
         ]
     );
 
-
         return response()->json([
             "message" => "inventory updated successfully",
-            "inventory" => $inventory,
+            //"inventory" => $inventory,
         ], 200);
 
     }
