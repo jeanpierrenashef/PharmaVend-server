@@ -39,4 +39,7 @@ class AdminController extends Controller{
             "product" => $product
         ]);
     }
+    public function updateInventory(Request $request){
+        
+    }
 }
