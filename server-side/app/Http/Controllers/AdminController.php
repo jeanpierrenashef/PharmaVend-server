@@ -40,6 +40,22 @@ class AdminController extends Controller{
         ]);
     }
     public function updateInventory(Request $request){
-        
+
+        $inventory = Inventory::updateOrCreate([
+
+            'machine_id' => $request->machine_id,
+            'product_id' => $request->product_id,
+        ],
+        [
+            'quantity' => $request->quantity,
+        ]
+    );
+
+
+        return response()->json([
+            "message" => "inventory updated successfully",
+            "inventory" => $inventory,
+        ], 200);
+
     }
 }
