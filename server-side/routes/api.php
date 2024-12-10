@@ -25,6 +25,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     
     Route::prefix("admin")->middleware(isAdmin::class)->group(function (){
         Route::post("/add_machine",[AdminController::class,"addMachine"]);
+        Route::post("/add_product",[AdminController::class,"addProduct"]);
 
     });
 });
