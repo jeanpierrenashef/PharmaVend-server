@@ -16,8 +16,10 @@ class IsAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
-        if($user->user_type_id != 1){
-            return redirect()->route('unauthorized');
+        if($user->user_type_id == 1){
+            return response()->json([
+                'message' => 'Unauthorized access.'
+            ], 403);
         }
         return $next($request);
     }
