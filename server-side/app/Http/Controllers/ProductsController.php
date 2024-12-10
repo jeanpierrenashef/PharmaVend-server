@@ -22,40 +22,31 @@ class ProductsController extends Controller{
             'inventory' => $inventoryRecords
         ], 200);
     }
-    public function purchaseProduct(Request $request)
-    {
-        // Validate the incoming request
-        $validated = $request->validate([
-            'machine_id' => 'required|exists:machines,id',
-            'product_id' => 'required|exists:products,id',
-            'quantity' => 'required|integer|min:1'
-        ]);
-    
-        // Retrieve the inventory record for the given machine and product
-        $inventory = Inventory::where('machine_id', $validated['machine_id'])
-                              ->where('product_id', $validated['product_id'])
-                              ->first();
-    
-        if (!$inventory) {
+    public function purchaseProduct(Request $request){
+        $inventory = Inventory::where('machine_id', $request->machine_id)
+                                ->where('product_id', $request->product_id)
+                                ->first();
+        if(!$inventory){
             return response()->json([
-                "message" => "This product doesn't exist in this machine."
-            ], 404);
+                "message" => "This product doesnt exist in this table"
+            ],404);
         }
-    
-        if ($inventory->quantity < $validated['quantity']) {
+        if($inventory->quantity < $request->quantity){
             return response()->json([
                 "message" => "Insufficient stock"
-            ], 400);
+            ],500);
         }
-    
-        // Decrement the inventory quantity
-        $inventory->quantity -= $validated['quantity'];
-        $inventory->save();
-    
+
+        
+        $updated = Inventory::where('machine_id', $request->machine_id)
+                        ->where('product_id', $request->product_id)
+                        ->update([
+                            'quantity' => $inventory->quantity - $request->quantity
+                        ]);
+
         return response()->json([
             "message" => "Purchase successful",
-            "remaining_quantity" => $inventory->quantity
-        ], 200);
+            "remaining_quantity" => ($inventory->quantity - $request->quantity)
+        ],200);
     }
-    
 }
