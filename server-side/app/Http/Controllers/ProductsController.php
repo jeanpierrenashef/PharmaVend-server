@@ -40,11 +40,12 @@ class ProductsController extends Controller{
         }
 
         
-        $updated = Inventory::where('machine_id', $request->machine_id)
+        $update = Inventory::where('machine_id', $request->machine_id)
                         ->where('product_id', $request->product_id)
                         ->update([
                             'quantity' => $inventory->quantity - $request->quantity
                         ]);
+
 
         $user = JWTAuth::parseToken()->authenticate();
         $product = Product::find($request->product_id);
@@ -58,9 +59,14 @@ class ProductsController extends Controller{
         $transaction->product_id = $request->product_id;
         $transaction->save();
         
+        $updated = Inventory::where('machine_id', $request->machine_id)
+                                ->where('product_id', $request->product_id)
+                                ->first();
+
         return response()->json([
             "message" => "Purchase successful",
-            "remaining_quantity" => ($inventory->quantity - $request->quantity)
+            "remaining_quantity" => ($inventory->quantity - $request->quantity),
+            "product" => $updated
         ],200);
     }
 
