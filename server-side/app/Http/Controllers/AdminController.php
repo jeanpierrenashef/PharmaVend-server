@@ -24,4 +24,19 @@ class AdminController extends Controller{
             "machine" => $machine
         ]);
     }
+
+    public function addProduct(Request $request){
+        $product = new Product;
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->category = $request->category;
+        $product->price = $request->price;
+        $product->image_url = $request->image_url;
+
+        $product->save();
+        return response()->json([
+            "message" => "product added successfully",
+            "product" => $product
+        ]);
+    }
 }
