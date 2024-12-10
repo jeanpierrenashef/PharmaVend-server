@@ -70,6 +70,7 @@ class JWTAuthController extends Controller
             return response()->json(['error' => 'Failed to logout'], 500);
         }
     }
+    
     public function unauthorized(){
         return response()->json([
             "message"=>"Unauthorized access"
