@@ -19,7 +19,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         //Route::get('/', [LocationController::class, 'getClosestLocation']); 
         Route::get('/{id}', [ProductsController::class, 'getProductList']);
         Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
+        
     });
-
+    Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
 
 });

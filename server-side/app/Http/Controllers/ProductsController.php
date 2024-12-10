@@ -63,4 +63,19 @@ class ProductsController extends Controller{
             "remaining_quantity" => ($inventory->quantity - $request->quantity)
         ],200);
     }
+
+    public function getHistoryOfPurchase(){
+        $user = JWTAuth::parseToken()->authenticate();
+        $transaction = Transaction::where("user_id", $user->id)->get();
+
+        if($transaction->isEmpty()){
+            return response()->json([   
+                "message" => "no transaction for this user"
+            ],400);
+        }
+        return response()->json([
+            "transactions" => $transaction
+        ]);
+
+    }
 }
