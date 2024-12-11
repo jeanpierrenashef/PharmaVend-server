@@ -16,7 +16,7 @@ Route::post("/login", [JWTAuthController::class, "login"]);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/set_location', [LocationController::class, 'setUserLocation']);
-    Route::post('/set_machine', [LocationController::class, 'setUserMachine']);
+    Route::post('/set_machine', [LocationController::class, 'setDifferentMachine']);
     Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
 
     Route::prefix('machine')->group(function () {

@@ -71,8 +71,14 @@ class LocationController extends Controller{
         ], 200);
     }
 
-    public function setUserMachine (Request $request){
+    public function setDifferentMachine (Request $request){
+        $user = JWTAuth::parseToken()->authenticate();
 
+        $user->update(["machine_id" => $request->machine_id]);
+
+        return response()->json([
+            "message" => "Machine id updated successfully"
+        ],200);
     }
 
 
