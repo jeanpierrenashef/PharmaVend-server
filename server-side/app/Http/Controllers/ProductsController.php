@@ -24,6 +24,7 @@ class ProductsController extends Controller{
             'inventory' => $inventoryRecords
         ], 200);
     }
+    
     public function purchaseProduct(Request $request){
         $inventory = Inventory::where('machine_id', $request->machine_id)
                                 ->where('product_id', $request->product_id)

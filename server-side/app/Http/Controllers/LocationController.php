@@ -44,24 +44,35 @@ class LocationController extends Controller{
 
         $distances = $data['rows'][0]['elements'];
         $machineDistances = [];
+        $minDistance = null;
+        $closestMachineId = null;
 
         foreach ($distances as $index => $distance) {
+            $distanceValue = $distance['distance']['value'];
             $machineDistances[] = [
                 'machine_id' => $machines[$index]->id,
                 'distance_text' => $distance['distance']['text'], 
-                'distance_value' => $distance['distance']['value'], 
+                'distance_value' => $distanceValue, 
                 'duration_text' => $distance['duration']['text'], 
                 'duration_value' => $distance['duration']['value'], 
             ];
+            if (is_null($minDistance) || $distanceValue < $minDistance) {
+                $minDistance = $distanceValue;
+                $closestMachineId = $machines[$index]->id;
+            }
         }
 
+        $user->machine_id = $closestMachineId;
+        $user->save();
+
         return response()->json([
-            'distances' => $machineDistances
+            'distances' => $machineDistances,
+            'closest_machine_id' => $closestMachineId
         ], 200);
     }
 
     public function setUserMachine (Request $request){
-        
+
     }
 
 
