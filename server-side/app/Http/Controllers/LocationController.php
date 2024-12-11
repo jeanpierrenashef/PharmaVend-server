@@ -60,5 +60,9 @@ class LocationController extends Controller{
         ], 200);
     }
 
+    public function setUserMachine (Request $request){
+        
+    }
+
 
 }
