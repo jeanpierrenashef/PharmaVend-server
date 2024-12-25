@@ -18,6 +18,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/set_location', [LocationController::class, 'setUserLocation']);
     Route::post('/set_machine', [LocationController::class, 'setDifferentMachine']);
     Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
+    Route::get('/map', [LocationController::class , 'getMachines']);
 
     Route::prefix('machine')->group(function () {
         Route::get('/{id}', [ProductsController::class, 'getProductList']);

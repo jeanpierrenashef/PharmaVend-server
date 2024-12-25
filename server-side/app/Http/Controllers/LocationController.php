@@ -81,5 +81,12 @@ class LocationController extends Controller{
         ],200);
     }
 
+    public function getMachines (){
+        $machines = Machine::all();
+        return response()->json([
+            'machines ' => $machines
+        ]);
+    }
+
 
 }
