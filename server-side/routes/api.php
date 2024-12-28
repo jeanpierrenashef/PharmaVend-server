@@ -17,7 +17,7 @@ Route::get('/map', [LocationController::class , 'getMachines']);
 Route::get('/{id}', [ProductsController::class, 'getProductList']);
 Route::post('/history', [ProductsController::class, 'getHistoryOfPurchase']);
 Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
-Route::post('/dispense', [ProductsController::class, 'dispenseTransaction']);
+Route::post('/dispense/{id}', [ProductsController::class, 'dispenseTransaction']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/set_location', [LocationController::class, 'setUserLocation']);
