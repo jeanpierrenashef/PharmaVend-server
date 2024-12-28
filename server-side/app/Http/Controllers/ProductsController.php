@@ -48,14 +48,14 @@ class ProductsController extends Controller{
                         ]);
 
 
-        $user = JWTAuth::parseToken()->authenticate();
+        //$user = JWTAuth::parseToken()->authenticate();
         $product = Product::find($request->product_id);
         $price = $product->price;
 
         $transaction = new Transaction;
         $transaction->quantity = $request->quantity;
         $transaction->total_price = ($request->quantity * $price);
-        $transaction->user_id = $user->id;
+        $transaction->user_id = $request->user_id;
         $transaction->machine_id = $request->machine_id;
         $transaction->product_id = $request->product_id;
         $transaction->save();
@@ -71,9 +71,9 @@ class ProductsController extends Controller{
         ],200);
     }
 
-    public function getHistoryOfPurchase(){
-        $user = JWTAuth::parseToken()->authenticate();
-        $transaction = Transaction::where("user_id", $user->id)->get();
+    public function getHistoryOfPurchase(Request $request){
+        //$user = JWTAuth::parseToken()->authenticate();
+        $transaction = Transaction::where("user_id", $request->user_id)->get();
 
         if($transaction->isEmpty()){
             return response()->json([   
@@ -84,5 +84,20 @@ class ProductsController extends Controller{
             "transactions" => $transaction
         ]);
 
+    }
+    public function dispenseTransaction ($id) {
+        $transaction = Transaction::find($id);
+
+        if (!$transaction) {
+            return response()->json([
+                "message" => "Transaction not found"
+            ], 404);
+        }
+        $transaction->dispensed = 1;
+        $transaction->save();
+
+        return response()->json([
+            "transaction" => $transaction
+        ]);
     }
 }

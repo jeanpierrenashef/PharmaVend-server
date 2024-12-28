@@ -13,16 +13,21 @@ use App\Http\Middleware\isAdmin;
 
 Route::post("/register", [JWTAuthController::class, "register"]);
 Route::post("/login", [JWTAuthController::class, "login"]);
+Route::get('/map', [LocationController::class , 'getMachines']);
+Route::get('/{id}', [ProductsController::class, 'getProductList']);
+Route::post('/history', [ProductsController::class, 'getHistoryOfPurchase']);
+Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
+Route::post('/dispense', [ProductsController::class, 'dispenseTransaction']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/set_location', [LocationController::class, 'setUserLocation']);
     Route::post('/set_machine', [LocationController::class, 'setDifferentMachine']);
-    Route::get('/history', [ProductsController::class, 'getHistoryOfPurchase']);
-    Route::get('/map', [LocationController::class , 'getMachines']);
+    
+    
 
     Route::prefix('machine')->group(function () {
-        Route::get('/{id}', [ProductsController::class, 'getProductList']);
-        Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
+        
+        
     });
     
     Route::prefix("admin")->middleware(isAdmin::class)->group(function (){

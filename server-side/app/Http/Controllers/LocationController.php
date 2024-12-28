@@ -23,10 +23,10 @@ class LocationController extends Controller{
         $user->longitude = $request->longitude;
         $user->save();
 
-        $machines = Machine::select('id', 'lattitude', 'longitude')->get();
+        $machines = Machine::select('id', 'latitude', 'longitude')->get();
 
         $destinations = $machines->map(function ($machine){
-            return "{$machine->lattitude},{$machine->longitude}";
+            return "{$machine->latitude},{$machine->longitude}";
         })->implode('|');
 
         $apiKey = "AIzaSyD3EiOtcu7hbFzjSOBIMlFbnU7pXSCq4cw";
@@ -84,7 +84,7 @@ class LocationController extends Controller{
     public function getMachines (){
         $machines = Machine::all();
         return response()->json([
-            'machines ' => $machines
+            'machines' => $machines
         ]);
     }
 
