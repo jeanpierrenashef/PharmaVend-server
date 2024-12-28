@@ -100,4 +100,17 @@ class ProductsController extends Controller{
             "transaction" => $transaction
         ]);
     }
+
+    public function getProduct($id){
+        $product = Product::find($id);
+        if (!$product) {
+            return response()->json([
+                "message" => "product not found"
+            ], 404);
+        }
+        return response()->json([
+            "product" => $product
+        ]);
+
+    }
 }

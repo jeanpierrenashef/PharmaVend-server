@@ -18,6 +18,7 @@ Route::get('/{id}', [ProductsController::class, 'getProductList']);
 Route::post('/history', [ProductsController::class, 'getHistoryOfPurchase']);
 Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
 Route::put('/dispense/{id}', [ProductsController::class, 'dispenseTransaction']);
+Route::get("/product/{id}", [ProductsController::class, 'getProduct']);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/set_location', [LocationController::class, 'setUserLocation']);
