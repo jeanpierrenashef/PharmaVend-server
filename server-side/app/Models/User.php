@@ -25,7 +25,6 @@ class User extends Authenticatable implements JWTSubject
         'lattitude',
         'longitude',
         'user_type_id',
-        'machine_id'
     ];
 
     /**
