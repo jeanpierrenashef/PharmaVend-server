@@ -71,5 +71,11 @@ class AdminController extends Controller{
         "inventory" => $updatedInventory,
     ], 200);
 }
+    public function getUsers(){
+        $users = User::all();
+        return response()->json([
+            "users" => $users
+        ]);
+    }
 
 }
