@@ -73,16 +73,16 @@ class AdminController extends Controller{
 }
     public function getUsers(){
         $users = User::all();
-        return response()->json([
+        return response()->json(
             $users
-        ]);
+        );
     }
 
     public function getTransactions(){
         $transactions = Transaction::all();
-        return response()->json([
+        return response()->json(
             $transactions
-        ]);
+        );
     }
 
 }
