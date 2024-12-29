@@ -74,7 +74,14 @@ class AdminController extends Controller{
     public function getUsers(){
         $users = User::all();
         return response()->json([
-            "users" => $users
+            $users
+        ]);
+    }
+
+    public function getTransactions(){
+        $transactions = Transaction::all();
+        return response()->json([
+            $transactions
         ]);
     }
 
