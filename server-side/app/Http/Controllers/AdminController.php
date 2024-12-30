@@ -92,4 +92,11 @@ class AdminController extends Controller{
         );
     }
 
+    public function getMachines(){
+        $machines = Machine::all();
+        return response()->json(
+            $machines
+        );
+    }
+
 }

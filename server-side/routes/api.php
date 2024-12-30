@@ -25,6 +25,8 @@ Route::prefix("admin")->group(function (){
     Route::post("/update_inventory", [AdminController::class, "updateInventory"]);
     Route::get("/users", [AdminController::class, "getUsers"]);
     Route::get("/transactions", [AdminController::class, "getTransactions"]);
+    Route::get("/products", [AdminController::class, "getProducts"]);
+    Route::get("/machines", [AdminController::class, "getMachines"]);
 });
 
 Route::middleware([JwtMiddleware::class])->group(function () {
