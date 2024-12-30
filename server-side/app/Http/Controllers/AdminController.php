@@ -15,8 +15,9 @@ class AdminController extends Controller{
     public function addMachine(Request $request){
         $machine = new Machine;
         $machine->location = $request->location;
-        $machine->lattitude = $request->lattitude;
+        $machine->latitude = $request->latitude;
         $machine->longitude = $request->longitude;
+        $machine->status = $request->status;
         $machine->save();
 
         return response()->json([
