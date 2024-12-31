@@ -28,6 +28,8 @@ Route::prefix("admin")->group(function (){
     Route::get("/products", [AdminController::class, "getProducts"]);
     Route::get("/machines", [AdminController::class, "getMachines"]);
     Route::delete("/machines/{id}", [AdminController::class, "deleteMachine"]);
+    Route::put('machines/{id}', [AdminController::class, 'updateMachine']);
+
 });
 
 Route::middleware([JwtMiddleware::class])->group(function () {
