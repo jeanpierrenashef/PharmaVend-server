@@ -100,4 +100,19 @@ class AdminController extends Controller{
         );
     }
 
+    public function deleteMachine($id){
+        $machine = Machine::find($id);
+
+        if($machine){
+            $machine -> delete();
+            return response()->json([
+                'message' => "successful"
+            ]);
+        }else{
+            return response()->json([
+                'message' => "not found"
+            ]);
+        }
+    }
+
 }
