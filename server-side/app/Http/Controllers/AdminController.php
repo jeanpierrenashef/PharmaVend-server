@@ -107,12 +107,31 @@ class AdminController extends Controller{
             $machine -> delete();
             return response()->json([
                 'message' => "successful"
-            ]);
+            ],200);
         }else{
             return response()->json([
                 'message' => "not found"
-            ]);
+            ],404);
         }
     }
+
+    public function updateMachine(Request $request, $id){
+        $machine = Machine::find($id);
+        if (!$machine){
+            return response()->json([
+                "message" => "error no machine"
+            ]);
+        }
+        $machine->location = $request->location;
+        $machine->latitude = $request->latitude;
+        $machine->longitude = $request->longitude;
+        $machine->status = $request->status;
+
+        $machine->update();
+        return response()->json([
+            'message' => 'successful',
+            'data' => $machine]);
+    }
+
 
 }
