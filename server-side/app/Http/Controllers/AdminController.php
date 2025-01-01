@@ -154,23 +154,23 @@ class AdminController extends Controller{
             $inventory
         );
     }
-    public function updateOrInsertInventory(Request $request){
-        {
-            $inventory = new Inventory;
+    // public function updateOrInsertInventory(Request $request){
+    //     {
+    //         $inventory = new Inventory;
         
-            $inventory = Inventory::updateOrCreate([
-                    'machine_id' => $request->machine_id,
-                    'product_id' => $request->product_id,
-                ],[
-                    'quantity' => DB::raw("GREATEST(quantity + {$request->quantity}, 0)")
-                ]
-            );
-            $inventory->save();
-            return response()->json([
-                "inventory" => $inventory,
-            ]);
-        }
-    }
+    //         $inventory = Inventory::updateOrCreate([
+    //                 'machine_id' => $request->machine_id,
+    //                 'product_id' => $request->product_id,
+    //             ],[
+    //                 'quantity' => DB::raw("GREATEST(quantity + {$request->quantity}, 0)")
+    //             ]
+    //         );
+    //         $inventory->save();
+    //         return response()->json([
+    //             "inventory" => $inventory,
+    //         ]);
+    //     }
+    // }
 
 
 }
