@@ -79,6 +79,21 @@ class AdminController extends Controller{
         );
     }
 
+    public function deleteUser(){
+        $user = User::find($id);
+
+        if($user){
+            $user -> delete();
+            return response()->json([
+                'message' => "successful"
+            ],200);
+        }else{
+            return response()->json([
+                'message' => "not found"
+            ],404);
+        }
+    }
+
     public function getTransactions(){
         $transactions = Transaction::all();
         return response()->json(
