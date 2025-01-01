@@ -30,6 +30,7 @@ Route::prefix("admin")->group(function (){
     Route::get("/machines", [AdminController::class, "getMachines"]);
     Route::delete("/machines/{id}", [AdminController::class, "deleteMachine"]);
     Route::put('machines/{id}', [AdminController::class, 'updateMachine']);
+    Route::get("/inventory", [AdminController::class, "getInventory"]);
 
 });
 
