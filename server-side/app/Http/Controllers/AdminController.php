@@ -79,7 +79,7 @@ class AdminController extends Controller{
         );
     }
 
-    public function deleteUser(){
+    public function deleteUser($id){
         $user = User::find($id);
 
         if($user){

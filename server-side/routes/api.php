@@ -23,7 +23,8 @@ Route::prefix("admin")->group(function (){
     Route::post("/add_machine",[AdminController::class,"addMachine"]);
     Route::post("/add_product",[AdminController::class,"addProduct"]);
     Route::post("/update_inventory", [AdminController::class, "updateInventory"]);
-    Route::get("/users", [AdminController::class, "getUsers"]);
+    Route::get("/users", [AdminController::class, "getUsers"]); 
+    Route::delete("/users/{id}", [AdminController::class, "deleteUser"]);
     Route::get("/transactions", [AdminController::class, "getTransactions"]);
     Route::get("/products", [AdminController::class, "getProducts"]);
     Route::get("/machines", [AdminController::class, "getMachines"]);
