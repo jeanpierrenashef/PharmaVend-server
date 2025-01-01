@@ -148,5 +148,12 @@ class AdminController extends Controller{
             'data' => $machine]);
     }
 
+    public function getInventory(){
+        $inventory = Inventory::all();
+        return response()->json(
+            $inventory
+        );
+    }
+
 
 }
