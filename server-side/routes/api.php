@@ -31,6 +31,7 @@ Route::prefix("admin")->group(function (){
     Route::delete("/machines/{id}", [AdminController::class, "deleteMachine"]);
     Route::put('machines/{id}', [AdminController::class, 'updateMachine']);
     Route::get("/inventory", [AdminController::class, "getInventory"]);
+    Route::post("update_inventory", [AdminController::class, "updateOrInsertInventory"]);
 
 });
 
