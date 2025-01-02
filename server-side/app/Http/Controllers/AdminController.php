@@ -154,6 +154,15 @@ class AdminController extends Controller{
             $inventory
         );
     }
+    public function toggleMachineStatus($id) {
+        $machine = Machine::find($id);
+        $machine->status = $machine->status === 'active' ? 'inactive' : 'active';
+        $machine->save();
+    
+        return response()->json(
+            $machine);
+    }
+    
     // public function updateOrInsertInventory(Request $request){
     //     {
     //         $inventory = new Inventory;
