@@ -23,6 +23,7 @@ Route::prefix("admin")->group(function (){
     
     Route::post("/add_product",[AdminController::class,"addProduct"]);
     Route::get("/products", [AdminController::class, "getProducts"]);
+    Route::delete("/products/{id}", [AdminController::class, "deleteProduct"]);
     Route::put('/products/{id}', [AdminController::class, 'updateProduct']);
 
     Route::get("/inventory", [AdminController::class, "getInventory"]);
