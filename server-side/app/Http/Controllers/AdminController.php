@@ -125,6 +125,20 @@ class AdminController extends Controller{
             'message' => 'successful',
             'data' => $product]);
     }
+    public function deleteProduct($id){
+        $product = Product::find($id);
+
+        if($product){
+            $product -> delete();
+            return response()->json([
+                'message' => "successful"
+            ],200);
+        }else{
+            return response()->json([
+                'message' => "not found"
+            ],404);
+        }
+    }
 
     public function getMachines(){
         $machines = Machine::all();
