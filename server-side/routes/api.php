@@ -20,17 +20,25 @@ Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
 Route::put('/dispense/{id}', [ProductsController::class, 'dispenseTransaction']);
 Route::get("/product/{id}", [ProductsController::class, 'getProduct']);
 Route::prefix("admin")->group(function (){
-    Route::post("/add_machine",[AdminController::class,"addMachine"]);
+    
     Route::post("/add_product",[AdminController::class,"addProduct"]);
+    Route::get("/products", [AdminController::class, "getProducts"]);
+    Route::put('/products/{id}', [AdminController::class, 'updateProduct']);
+
+    Route::get("/inventory", [AdminController::class, "getInventory"]);
     Route::post("/update_inventory", [AdminController::class, "updateInventory"]);
+
     Route::get("/users", [AdminController::class, "getUsers"]); 
     Route::delete("/users/{id}", [AdminController::class, "deleteUser"]);
+
     Route::get("/transactions", [AdminController::class, "getTransactions"]);
-    Route::get("/products", [AdminController::class, "getProducts"]);
+
+    Route::post("/add_machine",[AdminController::class,"addMachine"]);
     Route::get("/machines", [AdminController::class, "getMachines"]);
     Route::delete("/machines/{id}", [AdminController::class, "deleteMachine"]);
-    Route::put('machines/{id}', [AdminController::class, 'updateMachine']);
-    Route::get("/inventory", [AdminController::class, "getInventory"]);
+    Route::put('/machines/{id}', [AdminController::class, 'updateMachine']);
+
+    
     Route::post("/machines/toggle_status/{id}", [AdminController::class, "toggleMachineStatus"]);
 
 });

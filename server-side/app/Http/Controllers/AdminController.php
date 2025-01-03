@@ -107,6 +107,24 @@ class AdminController extends Controller{
             $products
         );
     }
+    public function updateProduct(Request $request, $id){
+        $product = Product::find($id);
+        if (!$product){
+            return response()->json([
+                "message" => "error no product"
+            ]);
+        }
+        $product->name = $request->name;
+        $product->category = $request->category;
+        $product->description = $request->description;
+        $product->price = $request->price;
+        $product->image_url = $request->image_url;
+
+        $product->update();
+        return response()->json([
+            'message' => 'successful',
+            'data' => $product]);
+    }
 
     public function getMachines(){
         $machines = Machine::all();
@@ -155,7 +173,7 @@ class AdminController extends Controller{
         );
     }
     public function toggleMachineStatus($id) {
-        $machine = Machine::find($id);
+        $machine = Machine::findOrFail($id);
         $machine->status = $machine->status === 'active' ? 'inactive' : 'active';
         $machine->save();
     
