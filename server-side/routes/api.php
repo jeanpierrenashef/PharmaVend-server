@@ -9,7 +9,7 @@ use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\AdminController;
 
 use App\Http\Middleware\JwtMiddleware;
-use App\Http\Middleware\isAdmin;
+use App\Http\Middleware\IsAdmin;
 
 Route::post("/register", [JWTAuthController::class, "register"]);
 Route::post("/login", [JWTAuthController::class, "login"]);
@@ -24,7 +24,7 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     // Route::post('/set_location', [LocationController::class, 'setUserLocation']);
     // Route::post('/set_machine', [LocationController::class, 'setDifferentMachine']);
 
-    Route::prefix("admin")->middleware('isAdmin')->group(function (){
+    Route::prefix("admin")->middleware([IsAdmin::class])->group(function (){
         //Route::prefix("admin")->group(function (){
         Route::post("/add_product",[AdminController::class,"addProduct"]);
         Route::get("/products", [AdminController::class, "getProducts"]);
