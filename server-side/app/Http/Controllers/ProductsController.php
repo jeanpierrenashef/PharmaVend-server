@@ -48,14 +48,17 @@ class ProductsController extends Controller{
                         ]);
 
 
-        //$user = JWTAuth::parseToken()->authenticate();
+        $user = JWTAuth::parseToken()->authenticate();
         $product = Product::find($request->product_id);
         $price = $product->price;
 
         $transaction = new Transaction;
         $transaction->quantity = $request->quantity;
         $transaction->total_price = ($request->quantity * $price);
-        $transaction->user_id = $request->user_id;
+
+        //$transaction->user_id = $request->user_id;
+        $transaction->user_id = $user->id;
+
         $transaction->machine_id = $request->machine_id;
         $transaction->product_id = $request->product_id;
         $transaction->save();
@@ -72,8 +75,10 @@ class ProductsController extends Controller{
     }
 
     public function getHistoryOfPurchase(Request $request){
-        //$user = JWTAuth::parseToken()->authenticate();
-        $transaction = Transaction::where("user_id", $request->user_id)->get();
+        $user = JWTAuth::parseToken()->authenticate();
+
+        //$transaction = Transaction::where("user_id", $request->user_id)->get();
+        $transaction = Transaction::where("user_id", $user->id)->get();
 
         if($transaction->isEmpty()){
             return response()->json([   
