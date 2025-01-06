@@ -13,17 +13,21 @@ use Illuminate\Http\Request;
 class ProductsController extends Controller{ 
 
     public function getProductList($id){
-        $inventoryRecords = Inventory::where("machine_id", $id)->get();
-
+        $inventoryRecords = Inventory::where("machine_id", $id)
+                                    ->where("quantity", ">", 0)
+                                    ->get();
+    
         $productIds = $inventoryRecords->pluck('product_id');
+    
         $products = Product::whereIn('id', $productIds)->get();
-
+    
         return response()->json([
             'machine_id' => $id,
             'products' => $products,
             'inventory' => $inventoryRecords
         ], 200);
     }
+    
     
     public function purchaseProduct(Request $request){
         $inventory = Inventory::where('machine_id', $request->machine_id)
@@ -36,7 +40,7 @@ class ProductsController extends Controller{
         }
         if($inventory->quantity < $request->quantity){
             return response()->json([
-                "message" => "Insufficient stock"
+                "message" => "Insufficient stock, Only 1 left"
             ],500);
         }
 
