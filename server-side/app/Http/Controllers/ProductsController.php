@@ -6,7 +6,7 @@ use App\Models\Product;
 use App\Models\Inventory;
 use App\Models\Machine;
 use App\Models\Transaction;
-
+use Illuminate\Support\Facades\Http;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Http\Request;
 
@@ -105,9 +105,18 @@ class ProductsController extends Controller{
         $transaction->dispensed = 1;
         $transaction->save();
 
+        $productId = $transaction->product_id;
+
+        
+        $espResponse = Http::post('http://192.168.1.2/post-message', [
+            'product_id' => $productId,
+        ]);
+
         return response()->json([
             "transaction" => $transaction
         ]);
+
+
     }
 
     public function getProduct($id){
