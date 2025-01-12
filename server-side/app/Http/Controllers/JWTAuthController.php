@@ -76,4 +76,40 @@ class JWTAuthController extends Controller
             "message"=>"Unauthorized access"
         ],401);
     }
+
+
+    public function checkUser(Request $request){
+        $user = User::where('email', $request->email)->first();
+
+        if ($user) {
+            $token = JWTAuth::fromUser($user);
+
+            return response()->json([
+                'user' => $user,
+                'token' => $token,
+            ], 200);
+        } else {
+            return response()->json([
+                'message' => 'User not found'
+            ], 404);
+        }
+}
+
+public function registerGoogleUser(Request $request){
+
+    $user = new User();
+    $user->username = $request->username;
+    $user->email = $request->email;
+    $user->password = null; 
+    $user->save();
+
+    
+    $token = JWTAuth::fromUser($user);
+
+    return response()->json([
+        'user' => $user,
+        'token' => $token,
+    ], 201);
+}
+
 }
