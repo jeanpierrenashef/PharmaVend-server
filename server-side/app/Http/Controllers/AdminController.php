@@ -73,14 +73,15 @@ class AdminController extends Controller{
             ->where('product_id', $request->product_id)
             ->first();
 
-        $machine = Machine::find($request->machine_id); // Fetch the Machine object
+        $machine = Machine::find($request->machine_id); 
         $product = Product::find($request->product_id);
 
-        $title = 'Inventory Updated';
-        $body = "{$request->add_quantity} units of {$product->name} were added to machine {$machine->location}.";
-
-        // Send notification
-        $this->sendNotification($title, $body);
+        if ($request->add_quantity > 0) {
+            $title = 'Inventory Updated';
+            $body = "{$request->add_quantity} units of {$product->name} were added to machine {$machine->location}.";
+    
+            $this->sendNotification($title, $body);
+        }
 
         return response()->json([
             "message" => "Inventory updated successfully.",
