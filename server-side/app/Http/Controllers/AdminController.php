@@ -51,58 +51,61 @@ class AdminController extends Controller{
 
     public function updateInventory(Request $request){
 
-    $inventory = Inventory::where('machine_id', $request->machine_id)
-        ->where('product_id', $request->product_id)
-        ->first();
-
-    if ($inventory) {
-        Inventory::where('machine_id', $request->machine_id)
+        $inventory = Inventory::where('machine_id', $request->machine_id)
             ->where('product_id', $request->product_id)
-            ->update([
-                'quantity' => $inventory->quantity + $request->add_quantity,
+            ->first();
+
+        if ($inventory) {
+            Inventory::where('machine_id', $request->machine_id)
+                ->where('product_id', $request->product_id)
+                ->update([
+                    'quantity' => $inventory->quantity + $request->add_quantity,
+                ]);
+        } else {
+            Inventory::create([
+                'machine_id' => $request->machine_id,
+                'product_id' => $request->product_id,
+                'quantity' => $request->add_quantity,
             ]);
-    } else {
-        Inventory::create([
-            'machine_id' => $request->machine_id,
-            'product_id' => $request->product_id,
-            'quantity' => $request->add_quantity,
-        ]);
+        }
+
+        $updatedInventory = Inventory::where('machine_id', $request->machine_id)
+            ->where('product_id', $request->product_id)
+            ->first();
+
+        $machine = Machine::find($request->machine_id); // Fetch the Machine object
+        $product = Product::find($request->product_id);
+
+        $title = 'Inventory Updated';
+        $body = "{$request->add_quantity} units of {$product->name} were added to machine {$machine->location}.";
+
+        // Send notification
+        $this->sendNotification($title, $body);
+
+        return response()->json([
+            "message" => "Inventory updated successfully.",
+            "inventory" => $updatedInventory,
+        ], 200);
     }
 
-    $updatedInventory = Inventory::where('machine_id', $request->machine_id)
-        ->where('product_id', $request->product_id)
-        ->first();
+    private function sendNotification($title, $body){
 
-    $title = 'Inventory Updated';
-    $body = "{$request->add_quantity} units of {$request->product_id} were added to machine {$request->machine_id}.";
-
-    // Send notification
-    $this->sendNotification($title, $body);
-
-    return response()->json([
-        "message" => "Inventory updated successfully.",
-        "inventory" => $updatedInventory,
-    ], 200);
-}
-
-private function sendNotification($title, $body){
-
-    $serviceAccountPath = storage_path('app/json/file.json');
+        $serviceAccountPath = storage_path('app/json/file.json');
 
 
-    $factory = (new Factory)->withServiceAccount($serviceAccountPath);
-    $messaging = $factory->createMessaging();
-    $fcmToken = 'eu5yG-k8SDqzRka1fSGYpw:APA91bEuYM64y1GnUx_Uip6U1ld9ToA-bNaUDWB8L8VFK277qnkiio49z20rFrguApm8iJj_Bl6ZK_aNqVnAEItv7giw_NW0Cwde1eM_Txvp4-xRH7cn4Bo';
+        $factory = (new Factory)->withServiceAccount($serviceAccountPath);
+        $messaging = $factory->createMessaging();
+        $fcmToken = 'eu5yG-k8SDqzRka1fSGYpw:APA91bEuYM64y1GnUx_Uip6U1ld9ToA-bNaUDWB8L8VFK277qnkiio49z20rFrguApm8iJj_Bl6ZK_aNqVnAEItv7giw_NW0Cwde1eM_Txvp4-xRH7cn4Bo';
 
 
-    $notification = Notification::create($title, $body);
+        $notification = Notification::create($title, $body);
 
-    $message = CloudMessage::withTarget('token', $fcmToken)
-        ->withNotification($notification);
+        $message = CloudMessage::withTarget('token', $fcmToken)
+            ->withNotification($notification);
 
 
-    $messaging->send($message);
-}
+        $messaging->send($message);
+    }
 
 
     public function getUsers(){
