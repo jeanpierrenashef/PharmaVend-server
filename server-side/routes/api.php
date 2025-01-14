@@ -15,6 +15,7 @@ Route::post("/register", [JWTAuthController::class, "register"]);
 Route::post("/login", [JWTAuthController::class, "login"]);
 Route::post("/check_user", [JWTAuthController::class, "checkUser"]);
 Route::post("/register_google", [JWTAuthController::class, "registerGoogleUser"]);
+Route::get("/display_machines", [AdminController::class, "getMachines"]);
 
 Route::middleware([JwtMiddleware::class])->group(function () {
     Route::get('/map', [LocationController::class , 'getMachines']);
