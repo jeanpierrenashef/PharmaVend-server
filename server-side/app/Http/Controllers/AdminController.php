@@ -10,7 +10,6 @@ use App\Models\User;
 
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
-// use Google\Client as GoogleClient;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 
@@ -96,7 +95,7 @@ class AdminController extends Controller{
 
         $factory = (new Factory)->withServiceAccount($serviceAccountPath);
         $messaging = $factory->createMessaging();
-        $fcmToken = 'eu5yG-k8SDqzRka1fSGYpw:APA91bEuYM64y1GnUx_Uip6U1ld9ToA-bNaUDWB8L8VFK277qnkiio49z20rFrguApm8iJj_Bl6ZK_aNqVnAEItv7giw_NW0Cwde1eM_Txvp4-xRH7cn4Bo';
+        $fcmToken = env('FCM_Token');
 
 
         $notification = Notification::create($title, $body);
@@ -231,25 +230,6 @@ class AdminController extends Controller{
         return response()->json(
             $machine);
     }
-    
-    // public function updateOrInsertInventory(Request $request){
-    //     {
-    //         $inventory = new Inventory;
-        
-    //         $inventory = Inventory::updateOrCreate([
-    //                 'machine_id' => $request->machine_id,
-    //                 'product_id' => $request->product_id,
-    //             ],[
-    //                 'quantity' => DB::raw("GREATEST(quantity + {$request->quantity}, 0)")
-    //             ]
-    //         );
-    //         $inventory->save();
-    //         return response()->json([
-    //             "inventory" => $inventory,
-    //         ]);
-    //     }
-    // }
 
-    
 
 }

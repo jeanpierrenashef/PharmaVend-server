@@ -24,11 +24,8 @@ Route::middleware([JwtMiddleware::class])->group(function () {
     Route::post('/purchase', [ProductsController::class, 'purchaseProduct']);
     Route::put('/dispense/{id}', [ProductsController::class, 'dispenseTransaction']);
     Route::get("/product/{id}", [ProductsController::class, 'getProduct']);
-    // Route::post('/set_location', [LocationController::class, 'setUserLocation']);
-    // Route::post('/set_machine', [LocationController::class, 'setDifferentMachine']);
 
     Route::prefix("admin")->middleware([IsAdmin::class])->group(function (){
-        //Route::prefix("admin")->group(function (){
         Route::post("/add_product",[AdminController::class,"addProduct"]);
         Route::get("/products", [AdminController::class, "getProducts"]);
         Route::delete("/products/{id}", [AdminController::class, "deleteProduct"]);

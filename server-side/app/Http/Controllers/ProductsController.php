@@ -60,7 +60,6 @@ class ProductsController extends Controller{
         $transaction->quantity = $request->quantity;
         $transaction->total_price = ($request->quantity * $price);
 
-        //$transaction->user_id = $request->user_id;
         $transaction->user_id = $user->id;
 
         $transaction->machine_id = $request->machine_id;
@@ -81,7 +80,6 @@ class ProductsController extends Controller{
     public function getHistoryOfPurchase(Request $request){
         $user = JWTAuth::parseToken()->authenticate();
 
-        //$transaction = Transaction::where("user_id", $request->user_id)->get();
         $transaction = Transaction::where("user_id", $user->id)->get();
 
         if($transaction->isEmpty()){
@@ -108,7 +106,7 @@ class ProductsController extends Controller{
         $productId = $transaction->product_id;
 
         
-        $espResponse = Http::post('http://192.168.1.2/post-message', [
+        $espResponse = Http::post('http://192.168.1.2/product_id', [
             'product_id' => $productId,
         ]);
 
