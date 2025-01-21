@@ -94,7 +94,8 @@ class ProductsController extends Controller{
     }
     public function dispenseTransaction ($id) {
         $transaction = Transaction::find($id);
-
+        //google/apiclient-services
+        
         if (!$transaction) {
             return response()->json([
                 "message" => "Transaction not found"
