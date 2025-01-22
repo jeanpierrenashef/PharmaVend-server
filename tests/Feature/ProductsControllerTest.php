@@ -143,9 +143,4 @@ class ProductsControllerTest extends TestCase{
                 ]);
     }
 
-
-
-
-
-
 }

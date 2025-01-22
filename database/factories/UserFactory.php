@@ -25,7 +25,7 @@ class UserFactory extends Factory
             'username' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'password' => static::$password ??= Hash::make('password'),
-            'user_type_id' => 1,
+            'user_type_id' => $this->faker->randomElement([1, 2])
         ];
     }
 
