@@ -47,13 +47,6 @@ Route::middleware([JwtMiddleware::class])->group(function () {
         
         Route::post("/machines/toggle_status/{id}", [AdminController::class, "toggleMachineStatus"]);
     
-        });
-    
-
-    Route::prefix('machine')->group(function () {
-        
-        
-    });
-    
+        });    
 
 });

@@ -107,9 +107,9 @@ class ProductsController extends Controller{
         $productId = $transaction->product_id;
 
         
-        $espResponse = Http::post('http://192.168.1.2/product_id', [
-            'product_id' => $productId,
-        ]);
+        // $espResponse = Http::post('http://192.168.1.2/product_id', [
+        //     'product_id' => $productId,
+        // ]);
 
         return response()->json([
             "transaction" => $transaction

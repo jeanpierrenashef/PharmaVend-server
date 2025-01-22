@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserType extends Model
 {
+    use HasFactory;
     //
 }

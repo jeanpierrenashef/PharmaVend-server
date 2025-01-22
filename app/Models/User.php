@@ -22,8 +22,6 @@ class User extends Authenticatable implements JWTSubject
         'username',
         'email',
         'password',
-        'lattitude',
-        'longitude',
         'user_type_id',
     ];
 
@@ -45,7 +43,6 @@ class User extends Authenticatable implements JWTSubject
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

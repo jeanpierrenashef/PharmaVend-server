@@ -3,8 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Machine extends Model{
-    protected $fillable = ["location", "lattitude", "longitude", "status"];
+    use HasFactory;
+    protected $fillable = ["location", "latitude", "longitude", "status"];
 }
